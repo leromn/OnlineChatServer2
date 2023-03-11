@@ -223,7 +223,7 @@ app.post("/addContact", async (req, res) => {
 
   });
 
-app.get("/getContacts", auth, (req, res) => {
+app.get("/getContacts", (req, res) => {
   User.find({userName:req.body.myUserName}).then((res)=>{
     res.status(200).json(res.contacts);
   })
