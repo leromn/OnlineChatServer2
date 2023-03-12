@@ -4,7 +4,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const mongoose=require('mongoose')
-
+const cors=require('cors');
 // const User = require("./model/user");
 const User = require("./model/collectionModel").User;
 const Message = require("./model/collectionModel").Message;
@@ -14,12 +14,13 @@ const messageSchema=require('./model/collectionModel').messageSchema;
 const auth = require("./middleware/auth");
 
 const app = express();
+app.use(cors());
 
 app.use(express.json({ limit: "50mb" }));
 
 app.post("/register", async (req, res) => {
   try {
-    res.set('Access-Control-Allow-Origin', '*');
+    
     // Get user input
     const { fullName, userName, email, password } = req.body;
 
@@ -69,7 +70,6 @@ app.post("/register", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   try {
-    res.set('Access-Control-Allow-Origin', '*');
     // Get user input
     const { userName, password } = req.body;
 
@@ -103,12 +103,10 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/welcome", auth, (req, res) => {
-  res.set('Access-Control-Allow-Origin', '*');
   res.status(200).send("Welcome 🙌 ");
 });
 
 app.post("/sendMessage", async (req, res) => {
-  res.set('Access-Control-Allow-Origin', '*');
   const{sender,reciever,message}=req.body;
 
   const user1=await User.findOne({userName:sender});
@@ -168,7 +166,6 @@ app.post("/sendMessage", async (req, res) => {
 });
 
 app.get("/getMessages", async (req, res) => {
-  res.set('Access-Control-Allow-Origin', '*');
 
   const NewMessage=mongoose.model(req.body.customTableName,messageSchema);
   NewMessage.find().then((result)=>{
@@ -180,7 +177,6 @@ app.get("/getMessages", async (req, res) => {
 });
 
 app.post("/addContact", async (req, res) => {
-  res.set('Access-Control-Allow-Origin', '*');
 
   const{myUserName,reciever}=req.body;
 
@@ -229,7 +225,6 @@ app.post("/addContact", async (req, res) => {
   });
 
 app.get("/getContacts", (req, res) => {
-  res.set('Access-Control-Allow-Origin', '*');
 
   User.find({userName:req.body.myUserName}).then((res)=>{
     res.status(200).json(res.contacts);
@@ -239,7 +234,7 @@ app.get("/getContacts", (req, res) => {
 
 
 // This should be the last route else any after it won't work
-app.use("*", (req, res) => {res.set('Access-Control-Allow-Origin', '*');
+app.use("*", (req, res) => {
   res.status(404).json({
     success: "false",
     message: "Page not found",
