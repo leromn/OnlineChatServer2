@@ -4,7 +4,6 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const mongoose=require('mongoose');
-const mongoose=require('mongoose');
 const User = require("./model/collectionModel").User;
 const Message = require("./model/collectionModel").Message;
 const messageSchema=require('./model/collectionModel').messageSchema;
@@ -33,7 +32,6 @@ app.post("/register", async (req, res) => {
 
     if (oldUser) {
       return res.send("User Already Exist. Please Login");
-      return res.send("User Already Exist. Please Login");
     }
 
     //Encrypt user password
@@ -61,7 +59,6 @@ app.post("/register", async (req, res) => {
     user.token = token;
 
     // return new user
-    res.json(user);
     res.json(user);
   } catch (err) {
     console.log(err);
@@ -97,14 +94,11 @@ app.post("/login", async (req, res) => {
       res.status(200).json(user);
     }
     res.status(400).json({problem:"invalidCredentials"});
-    
   } catch (err) {
     console.log(err);
   }
 });
 
-app.get("/welcome",(req, res) => {
-  res.send("Welcome 🙌 ");
 app.get("/welcome",(req, res) => {
   res.send("Welcome 🙌 ");
 });
@@ -132,7 +126,6 @@ app.post("/sendMessage", async (req, res) => {
     })
   }
   else{
-  res.send("user not found message not sent ");
   res.send("user not found message not sent ");
   }
 
@@ -167,7 +160,6 @@ app.post("/sendMessage", async (req, res) => {
 
 
   res.send("message sent successfully");
-  res.send("message sent successfully");
 });
 
 app.get("/getMessages", async (req, res) => {
@@ -201,7 +193,6 @@ app.post("/addContact", async (req, res) => {
     })
   }
   else{
-  res.send("user not found message not sent ");
   res.send("user not found message not sent ");
   }
 
