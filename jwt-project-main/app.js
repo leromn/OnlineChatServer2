@@ -23,7 +23,7 @@ app.post("/register", async (req, res) => {
 
     // Validate user input
     if (!(email && password && fullName && userName)) {
-      res.status(400).send("All input is required");
+      res.status(400).json({problem:"incompleteInput"});
     }
 
     // check if user already exist
@@ -31,7 +31,7 @@ app.post("/register", async (req, res) => {
     const oldUser = await User.findOne({ userName });
 
     if (oldUser) {
-      return res.send("User Already Exist. Please Login");
+      return res.status(400).json({problem:"existingUsername"});
     }
 
     //Encrypt user password
@@ -181,7 +181,7 @@ app.post("/addContact", async (req, res) => {
 
   var customeTableName=myUserName+reciever;
   var contactExists=false;
-  var tempTableName='';
+  
   // iterate through the contacts array in the object to see 
   // if the reciever is alrweady registered and has created table
   if(user1){
