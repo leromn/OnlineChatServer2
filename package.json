@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "node jwt-project-main/index",
+    "start": "node testScript",
     "dev": "nodemon jwt-project-main/index"
   },
   "dependencies": {
