@@ -3,24 +3,21 @@ require("./config/database").connect();
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const mongoose=require('mongoose')
-const cors=require('cors');
-// const User = require("./model/user");
+const mongoose=require('mongoose');
 const User = require("./model/collectionModel").User;
 const Message = require("./model/collectionModel").Message;
 const messageSchema=require('./model/collectionModel').messageSchema;
-
-
 const auth = require("./middleware/auth");
 
-const app = express();
+var cors = require('cors')
+var app = express();
+
 app.use(cors());
 
 app.use(express.json({ limit: "50mb" }));
 
 app.post("/register", async (req, res) => {
   try {
-    
     // Get user input
     const { fullName, userName, email, password } = req.body;
 
@@ -34,7 +31,7 @@ app.post("/register", async (req, res) => {
     const oldUser = await User.findOne({ userName });
 
     if (oldUser) {
-      return res.status(409).send("User Already Exist. Please Login");
+      return res.send("User Already Exist. Please Login");
     }
 
     //Encrypt user password
@@ -62,7 +59,7 @@ app.post("/register", async (req, res) => {
     user.token = token;
 
     // return new user
-    res.status(201).json(user);
+    res.json(user);
   } catch (err) {
     console.log(err);
   }
@@ -75,7 +72,7 @@ app.post("/login", async (req, res) => {
 
     // Validate user input
     if (!(userName && password)) {
-      res.status(400).send("All input is required");
+      res.status(400).json({problem:"incompleteInput"});
     }
     // Validate if user exist in our database
     const user = await User.findOne({ userName });
@@ -96,14 +93,14 @@ app.post("/login", async (req, res) => {
       // user
       res.status(200).json(user);
     }
-    res.status(400).send("Invalid Credentials");
+    res.status(400).json({problem:"invalidCredentials"});
   } catch (err) {
     console.log(err);
   }
 });
 
-app.get("/welcome", auth, (req, res) => {
-  res.status(200).send("Welcome 🙌 ");
+app.get("/welcome",(req, res) => {
+  res.send("Welcome 🙌 ");
 });
 
 app.post("/sendMessage", async (req, res) => {
@@ -129,7 +126,7 @@ app.post("/sendMessage", async (req, res) => {
     })
   }
   else{
-  res.status(200).send("user not found message not sent ");
+  res.send("user not found message not sent ");
   }
 
   if(!contactExists){
@@ -162,7 +159,7 @@ app.post("/sendMessage", async (req, res) => {
     });
 
 
-  res.status(200).send("message sent successfully");
+  res.send("message sent successfully");
 });
 
 app.get("/getMessages", async (req, res) => {
@@ -196,7 +193,7 @@ app.post("/addContact", async (req, res) => {
     })
   }
   else{
-  res.status(200).send("user not found message not sent ");
+  res.send("user not found message not sent ");
   }
 
   if(!contactExists){
