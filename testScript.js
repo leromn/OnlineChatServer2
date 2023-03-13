@@ -1,18 +1,19 @@
 const express = require("express");
-const app = express();
+
 const mongoose=require('mongoose');
-const cors=require('cors')
+var cors = require('cors');
+var app = express();
+
+app.use(cors());
+app.use(express.json());
 
 let Models=require('./jwt-project-main/model/collectionModel');
 
 const PORT = process.env.PORT || 3000;
-
-
-
 const User=Models.User;
 
-app.use(cors());
-app.use(express.json());
+
+
 // parse requests of content-type - application/x-www-form-urlencoded
 // app.use(express.urlencoded({ extended: true }));
 
