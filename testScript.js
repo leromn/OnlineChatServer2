@@ -35,11 +35,3 @@ const connection=mongoose.connection;
 connection.once('open',()=>{
         console.log('connected to database')
    });   
-
-  
-User.updateOne({userName:"cholele21"},
-{ $push: {"contacts": {
-    "userName":"sender",
-    "chatListTable":"customeTableName"
-    }}
-}).then(()=>{console.log("updated one ")})
