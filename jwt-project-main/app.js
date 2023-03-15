@@ -9,10 +9,14 @@ const Message = require("./model/collectionModel").Message;
 const messageSchema=require('./model/collectionModel').messageSchema;
 const auth = require("./middleware/auth");
 
-var cors = require('cors')
+var myCors = require('cors')
 var app = express();
+var corsOptions = {
+  origin: 'https://zm1qxw.csb.app',
+}
 
-app.use(cors());
+app.use(myCors(corsOptions));
+
 
 app.use(express.json({ limit: "50mb" }));
 
