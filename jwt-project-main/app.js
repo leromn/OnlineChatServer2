@@ -168,7 +168,7 @@ app.post("/sendMessage", async (req, res) => {
 
 app.get("/getMessages", async (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
-  const NewMessage=mongoose.model(req.body.customTableName,messageSchema);
+  const NewMessage=mongoose.model(req.body.customTableName,req.body.messageSchema);
   NewMessage.find().then((result)=>{
     res.json(result);
   }).catch((err)=>console.log(err));
@@ -228,7 +228,7 @@ app.post("/addContact", async (req, res) => {
 app.get("/getContacts",async (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
   await User.find({userName:req.body.myUserName}).then((result)=>{
-    res.status(200).json("result.contacts");
+    res.status(200).json(result.contacts);
   }).catch(err=>{res.json(err)})
   
 });
