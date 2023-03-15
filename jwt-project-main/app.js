@@ -220,7 +220,7 @@ app.post("/addContact", async (req, res) => {
   });
 
   }else{
-    res.json("contact already exists")
+    res.send("contact already exists")
   }
 
   });
