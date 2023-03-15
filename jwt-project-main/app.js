@@ -21,6 +21,7 @@ app.use(myCors(corsOptions));
 app.use(express.json({ limit: "50mb" }));
 
 app.post("/register", async (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
   try {
     // Get user input
     const { fullName, userName, email, password } = req.body;
@@ -70,6 +71,7 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
   try {
     // Get user input
     const { userName, password } = req.body;
@@ -104,10 +106,12 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/welcome",(req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
   res.send("Welcome 🙌 ");
 });
 
 app.post("/sendMessage", async (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
   const{sender,reciever,message}=req.body;
 
   const user1=await User.findOne({userName:sender});
@@ -167,7 +171,7 @@ app.post("/sendMessage", async (req, res) => {
 });
 
 app.get("/getMessages", async (req, res) => {
-
+  res.set('Access-Control-Allow-Origin', '*');
   const NewMessage=mongoose.model(req.body.customTableName,messageSchema);
   NewMessage.find().then((result)=>{
     res.json(result);
@@ -178,7 +182,7 @@ app.get("/getMessages", async (req, res) => {
 });
 
 app.post("/addContact", async (req, res) => {
-
+  res.set('Access-Control-Allow-Origin', '*');
   const{myUserName,reciever}=req.body;
 
   const user1=await User.findOne({userName:myUserName});
@@ -236,6 +240,7 @@ app.get("/getContacts", (req, res) => {
 
 // This should be the last route else any after it won't work
 app.use("*", (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
   res.status(404).json({
     success: "false",
     message: "Page not found",
