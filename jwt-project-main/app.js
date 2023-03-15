@@ -224,9 +224,12 @@ app.post("/addContact", async (req, res) => {
 
 app.get("/getContacts",async (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
-  const UsersFromDb = await User.find({userName:req.body.myUserName}).catch(err=>{res.json(err)})
+  const UsersFromDb = {};
+  UserFromDb=await User.find({userName:req.body.myUserName}).catch(err=>{res.json(err)})
+  const sentObject={};
+  sentObject=UsersFromDb[0];
   // console.log(UsersFromDb[0].contacts);
-  res.status(200).json({user:UsersFromDb[0]});
+  res.status(200).json({user:sentObject});
 
 });
 
