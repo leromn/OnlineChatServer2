@@ -11,12 +11,6 @@ const auth = require("./middleware/auth");
 
 var myCors = require('cors')
 var app = express();
-var corsOptions = {
-  origin: 'https://zm1qxw.csb.app',
-}
-
-app.use(myCors(corsOptions));
-
 
 app.use(express.json({ limit: "50mb" }));
 
