@@ -102,7 +102,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/welcome",(req, res) => {
+app.post("/welcome",(req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
   res.send("Welcome 🙌 ");
 });
@@ -167,7 +167,7 @@ app.post("/sendMessage", async (req, res) => {
   res.send("message sent successfully");
 });
 
-app.get("/getMessages", async (req, res) => {
+app.post("/getMessages", async (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
   const NewMessage=mongoose.model(req.body.customTableName,req.body.messageSchema);
   const MessagesFromDb=await NewMessage.find();
@@ -226,7 +226,7 @@ app.post("/addContact", async (req, res) => {
 app.post("/getContacts", (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
    User.find({userName:req.body.myUserName})
-  .then(users=>res.json(users))
+  .then(users=>res.json(users[0].contacts))
   .catch(err=>res.status(400).json('err'+err))
 });
 
@@ -241,20 +241,13 @@ app.post("/sendLocation", async (req, res) => {
     });
 
 });
-app.get("/getLocation", async (req, res) => {
+app.post("/getLocation", async (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
   Location.find().then(response=>res.json(response)).catch(err=>res.status(400).send(err))
 
 });
 
-app.get("/test", async (req, res) => {
-  res.set('Access-Control-Allow-Origin', '*');
-  let results = await User.find({userName:req.body.myUserName})
-    .limit(50)
-    .toArray();
 
-  res.send(results).status(200);
-})
 // This should be the last route else any after it won't work
 app.use("*", (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
