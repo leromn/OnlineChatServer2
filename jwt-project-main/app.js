@@ -241,6 +241,11 @@ app.post("/sendLocation", async (req, res) => {
     });
 
 });
+app.get("/getLocation", async (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  Location.find().then(response=>res.json(response)).catch(err=>res.status(400).send(err))
+
+});
 
 // This should be the last route else any after it won't work
 app.use("*", (req, res) => {
