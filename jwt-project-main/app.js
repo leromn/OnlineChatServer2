@@ -225,24 +225,25 @@ app.post("/addContact", async (req, res) => {
 app.get("/getContacts",async (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
   var UsersFromDb = {};
-  UserFromDb=await User.find({userName:req.body.myUserName}).catch(err=>{res.json(err)})
-  var sentObject={};
-  sentObject=UsersFromDb[0];
+  await User.find({userName:req.body.myUserName}).then((result)=>{
+    UserFromDb=result;
+  }).catch(err=>{res.json(err)})
+  var sentObject=UsersFromDb[0];
   // console.log(UsersFromDb[0].contacts);
-  res.status(200).json({user:sentObject});
+  res.status(200).json({user:sentObject,seecond:UserFromDb});
 
 });
 app.get("/getContacts2",async (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
   var UsersFromDb = {};
-  UserFromDb=await User.find({userName:req.body.myUserName}).catch(err=>{res.json(err)})
-  var sentObject={};
-  sentObject=UsersFromDb[0];
+  await User.find({userName:req.body.myUserName}).then((result)=>{
+    UserFromDb=result;
+  }).catch(err=>{res.json(err)})
+  var sentObject=UsersFromDb[0];
   // console.log(UsersFromDb[0].contacts);
-  res.status(200).send(UserFromDb);
+  res.status(200).send({"user":UserFromDb});
 
 });
-
 
 // This should be the last route else any after it won't work
 app.use("*", (req, res) => {
