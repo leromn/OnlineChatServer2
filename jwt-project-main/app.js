@@ -10,6 +10,7 @@ const Location=require("./model/collectionModel").Location;
 const messageSchema=require('./model/collectionModel').messageSchema;
 const auth = require("./middleware/auth");
 
+
 var cors = require('cors')
 var app = express()
 
@@ -244,7 +245,6 @@ app.post("/sendLocation", async (req, res) => {
 app.post("/getLocation", async (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
   Location.find().then(response=>res.json(response)).catch(err=>res.status(400).send(err))
-
 });
 
 
