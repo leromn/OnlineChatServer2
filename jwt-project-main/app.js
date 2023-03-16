@@ -223,10 +223,10 @@ app.post("/addContact", async (req, res) => {
 
   });
 
-app.get("/getContacts",async (req, res) => {
+app.get("/getContacts", (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
-  await User.find({userName:req.body.myUserName})
-  .then(users=>res.json("users"+"found"))
+   User.find({userName:req.body.myUserName})
+  .then(users=>res.json(users))
   .catch(err=>res.status(400).json('err'+err))
 });
 
