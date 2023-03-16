@@ -47,7 +47,7 @@ app.post("/register", async (req, res) => {
       email: email.toLowerCase(), // sanitize: convert email to lowercase
       password: encryptedPassword,
       token:'',
-      contacts:[{}]
+      contacts:[]
     });
 
     // Create token
