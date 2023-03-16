@@ -247,6 +247,13 @@ app.get("/getLocation", async (req, res) => {
 
 });
 
+router.get("/test", async (req, res) => {
+  let results = await User.find({})
+    .limit(50)
+    .toArray();
+
+  res.send(results).status(200);
+})
 // This should be the last route else any after it won't work
 app.use("*", (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
