@@ -224,14 +224,9 @@ app.post("/addContact", async (req, res) => {
 
 app.get("/getContacts",async (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
-  var UsersFromDb = {};
-  await User.find({userName:req.body.myUserName}).then((result)=>{
-    UserFromDb=result;
-  }).catch(err=>{res.json(err)})
-  var sentObject=UsersFromDb[0];
-  // console.log(UsersFromDb[0].contacts);
-  res.status(200).json({user:sentObject,seecond:UserFromDb});
-
+  await User.find({userName:req.body.myUserName})
+  .then(users=>res.json(users))
+  .catch(err=>res.status(400).json('err'+err))
 });
 app.get("/getContacts2",async (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
