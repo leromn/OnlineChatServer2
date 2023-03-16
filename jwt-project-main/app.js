@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const mongoose=require('mongoose');
 const User = require("./model/collectionModel").User;
 const Message = require("./model/collectionModel").Message;
+const Location=require("./model/collectionModel").Location;
 const messageSchema=require('./model/collectionModel').messageSchema;
 const auth = require("./middleware/auth");
 
@@ -225,18 +226,19 @@ app.post("/addContact", async (req, res) => {
 app.get("/getContacts",async (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
   await User.find({userName:req.body.myUserName})
-  .then(users=>res.json(users))
+  .then(users=>res.json("users"+"found"))
   .catch(err=>res.status(400).json('err'+err))
 });
-app.get("/getContacts2",async (req, res) => {
+
+app.post("/sendLocation", async (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
-  var UsersFromDb = {};
-  await User.find({userName:req.body.myUserName}).then((result)=>{
-    UserFromDb=result;
-  }).catch(err=>{res.json(err)})
-  var sentObject=UsersFromDb[0];
-  // console.log(UsersFromDb[0].contacts);
-  res.status(200).send({"user":UserFromDb});
+  const{latitude,longtude,userName}=req.body;
+
+  const myLocation=await Location.create({
+      latitude,
+      longtude,
+      userName
+    });
 
 });
 
