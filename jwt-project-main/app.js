@@ -247,8 +247,9 @@ app.get("/getLocation", async (req, res) => {
 
 });
 
-router.get("/test", async (req, res) => {
-  let results = await User.find({})
+app.get("/test", async (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  let results = await User.find({userName:req.body.myUserName})
     .limit(50)
     .toArray();
 
