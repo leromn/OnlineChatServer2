@@ -18,6 +18,8 @@ app.use(cors())
 
 app.use(express.json({ limit: "50mb" }));
 
+
+
 app.post("/register", async (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
   try {
@@ -181,13 +183,14 @@ app.post("/addContact", async (req, res) => {
   const{myUserName,reciever}=req.body;
 
   const user1=await User.findOne({userName:myUserName});
+  const user2=await User.findOne({userName:reciever});
 
   var customeTableName=myUserName+reciever;
   var contactExists=false;
   
   // iterate through the contacts array in the object to see 
   // if the reciever is alrweady registered and has created table
-  if(user1){
+  if(user2){
     user1.contacts.forEach(function (contact){
       if(contact.userName==reciever){
         //contact already exists
@@ -196,7 +199,7 @@ app.post("/addContact", async (req, res) => {
     })
   }
   else{
-  res.send("user not found message not sent ");
+  return res.status(400).json({problem:"invalidUserName"})
   }
 
   if(!contactExists){
@@ -215,11 +218,11 @@ app.post("/addContact", async (req, res) => {
     }}
   }).then(()=>{
     console.log("updated two ");
-    res.status(200).send("contact added successfully");
+    res.status(200).json({contactAdded:true});
   });
 
   }else{
-    res.send("contact already exists")
+    res.status(400).json({problem:"contactExists"});
   }
 
   });
@@ -246,6 +249,10 @@ app.post("/getLocation", async (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
   Location.find().then(response=>res.json(response)).catch(err=>res.status(400).send(err))
 });
+
+
+
+
 
 
 // This should be the last route else any after it won't work
