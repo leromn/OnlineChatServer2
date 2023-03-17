@@ -172,7 +172,7 @@ app.post("/sendMessage", async (req, res) => {
 
 app.post("/getMessages", async (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
-  const NewMessage=mongoose.model(req.body.customTableName,req.body.messageSchema);
+  const NewMessage=mongoose.model(req.body.customTableName,messageSchema);
   const MessagesFromDb=await NewMessage.find();
   res.status(200).json(MessagesFromDb)
 
