@@ -191,12 +191,14 @@ app.post("/addContact", async (req, res) => {
   // iterate through the contacts array in the object to see 
   // if the reciever is alrweady registered and has created table
   if(user2){
-    user1.contacts.forEach(function (contact){
-      if(contact.userName==reciever){
-        //contact already exists
-        contactExists=true;       
-      }
-    })
+    if(user1){
+      user1.contacts.forEach(function (contact){
+        if(contact.userName==reciever){
+          //contact already exists
+          contactExists=true;       
+        }
+      })
+    }
   }
   else{
   return res.status(400).json({problem:"invalidUserName"})
