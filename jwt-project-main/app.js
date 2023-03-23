@@ -82,7 +82,7 @@ app.post("/login", async (req, res) => {
     }
     // Validate if user exist in our database
     const user = await User.findOne({ userName });
-
+//
     if (user && (await bcrypt.compare(password, user.password))) {
       // Create token
       const token = jwt.sign(
