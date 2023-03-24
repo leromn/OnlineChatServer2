@@ -249,7 +249,9 @@ app.post("/sendLocation", async (req, res) => {
 });
 app.post("/getLocation", async (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
-  Location.find().then(response=>res.json(response)).catch(err=>res.status(400).send(err))
+  const LocFromDb=await Location.find();
+  res.status(200).json(LocFromDb)
+  // Location.find().then(response=>res.json(response)).catch(err=>res.status(400).send(err))
 });
 
 
