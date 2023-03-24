@@ -37,6 +37,6 @@ const User=mongoose.model('User',userSchema);
 const Message=mongoose.model('Messages',messageSchema);
 
 module.exports.messageSchema=messageSchema;
-module.exports.Location=this.Location;
+module.exports.Location=Location;
 module.exports.User=User;
 module.exports.Message=Message;
